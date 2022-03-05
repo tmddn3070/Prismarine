@@ -5,7 +5,7 @@ Subject: [PATCH] Rebrand
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index bd5d784ad6fb9786e03bd614baa40954b9fe6090..1e87bf6be926b4f877ea0f3c6c4fffa72affabba 100644
+index 52047b799fe241ba8501511899a7ff8e5cbe9925..04e24c9ceefaa591ab3355c138f50bbd07bddea5 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -18,7 +18,7 @@ repositories {
@@ -13,9 +13,9 @@ index bd5d784ad6fb9786e03bd614baa40954b9fe6090..1e87bf6be926b4f877ea0f3c6c4fffa7
  
  dependencies {
 -    implementation(project(":purpur-api")) // Pufferfish // Paper // Purpur
-+    implementation(project(":Prismarine-API")) // Pufferfish // Paper // Purpur
++    implementation(project(":Prismarine-API")) // Pufferfish // Paper // Purpur // Prismarine
      // Pufferfish start
-     implementation("io.papermc.paper:paper-mojangapi:1.18.2-R0.1-SNAPSHOT") {
+     implementation("io.papermc.paper:paper-mojangapi:1.18.1-R0.1-SNAPSHOT") {
          exclude("io.papermc.paper", "paper-api")
 @@ -88,12 +88,12 @@ tasks.jar {
          val gitBranch = git("rev-parse", "--abbrev-ref", "HEAD").getText().trim() // Paper
@@ -30,7 +30,7 @@ index bd5d784ad6fb9786e03bd614baa40954b9fe6090..1e87bf6be926b4f877ea0f3c6c4fffa7
 +            "Specification-Title" to "Prismarine", // Prismarine
              "Specification-Version" to project.version,
 -            "Specification-Vendor" to "Bukkit Team",
-+            "Specification-Vendor" to "PrismarineMC Team", // Prismarine
++            "Specification-Vendor" to "Prismarine Team", // Prismarine
              "Git-Branch" to gitBranch, // Paper
              "Git-Commit" to gitHash, // Paper
          )
@@ -106,7 +106,7 @@ index fba5dbdb7bcbb55400ef18342c9b54612972a718..27b04711cb79491c27e14e5324e19fa8
      // Contributed by Techcable <Techcable@outlook.com> in GH-65
      private static int fetchDistanceFromGitHub(@Nonnull String repo, @Nonnull String branch, @Nonnull String hash) {
 diff --git a/src/main/java/net/minecraft/CrashReport.java b/src/main/java/net/minecraft/CrashReport.java
-index 14ed740609b14242c2a8d377a78b2f719cd8a422..eb20cc34502cb00e09cf26f201a18baa21024ba7 100644
+index 6654c5a547cb49bce98d6b0feed9a245c1a5ce7c..79bf89df427f48733059fe5aafef0e647a2b1abc 100644
 --- a/src/main/java/net/minecraft/CrashReport.java
 +++ b/src/main/java/net/minecraft/CrashReport.java
 @@ -33,7 +33,7 @@ public class CrashReport {
@@ -128,10 +128,10 @@ index 14ed740609b14242c2a8d377a78b2f719cd8a422..eb20cc34502cb00e09cf26f201a18baa
          stringbuilder.append("// ");
          stringbuilder.append(CrashReport.getErrorComment());
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 1980bee459e8b0db7800903229aead69d6ceb21a..481c55685230207662129a14c3e1cf16a243179a 100644
+index 7a2feaabdad6026e2f4e39e6d669383c3bfeff21..9f3fb95c773de7a054ecc71d45cf5af5783dcb4a 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -961,7 +961,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1033,7 +1033,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          shutdownThread = Thread.currentThread();
          org.spigotmc.WatchdogThread.doStop(); // Paper
          if (!isSameThread()) {
@@ -141,7 +141,7 @@ index 1980bee459e8b0db7800903229aead69d6ceb21a..481c55685230207662129a14c3e1cf16
                  this.getRunningThread().stop();
                  try {
 diff --git a/src/main/java/net/minecraft/world/level/chunk/storage/RegionFileStorage.java b/src/main/java/net/minecraft/world/level/chunk/storage/RegionFileStorage.java
-index 5e9fc979daced5dad9977ab12ea019f4e6216bfb..cfc2826818d5a437ef5027b9f3dfac5dd4272cac 100644
+index c6267659e8ff73e59d2a4992aa67f86c02f7dda9..6d984b51610f9851157377a384a27d3d0134e9d9 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/storage/RegionFileStorage.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/storage/RegionFileStorage.java
 @@ -113,7 +113,7 @@ public class RegionFileStorage implements AutoCloseable {
@@ -154,10 +154,10 @@ index 5e9fc979daced5dad9977ab12ea019f4e6216bfb..cfc2826818d5a437ef5027b9f3dfac5d
  
      private static final int DEFAULT_SIZE_THRESHOLD = 1024 * 8;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f0e09c2ad08aa9ed8456e681621bf66fe55df30e..b600f535510a97f07f44826baf5be0c632c059f7 100644
+index 6ce503e8d76e37628b2824c31de32a1cf61874ea..6047932450fe28cde049092a1f1cc493a5f9f061 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -248,7 +248,7 @@ import javax.annotation.Nullable; // Paper
+@@ -251,7 +251,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {

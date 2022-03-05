@@ -1,43 +1,40 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Alpha <alphakr93@outlook.com>
-Date: Sat, 5 Mar 2022 12:06:25 +0900
+From: AlphaKR93 <alphakr93@outlook.com>
+Date: Mon, 28 Feb 2022 17:25:16 +0000
 Subject: [PATCH] Purpur API Changes
+
+Purpur Commit: ea44ea199f97667e298a6d55b556fc5383c478cd
 
 Original by PurpurMC Team
 
 Copyright (C) 2022 PurpurMC LLC
 
-Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included
-in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 0007c6b1d81373cb6592c8b9e02f464405050f68..629718eaf927cd64ba9989f75381dc85ef2caa0f 100644
+index 93390eaead78d229902df0f7c8f9b30cb6174de7..bac527acaa1826486a8183bcccb4d64654a0efed 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -102,6 +102,7 @@ tasks.jar {
+@@ -41,6 +41,7 @@ dependencies {
+     api("org.apache.logging.log4j:log4j-api:2.17.1")
+     api("org.slf4j:slf4j-api:1.8.0-beta4")
+     api("io.sentry:sentry:5.4.0") // Pufferfish
++    api("net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT") // Purpur
+ 
+     implementation("org.ow2.asm:asm:9.2")
+     implementation("org.ow2.asm:asm-commons:9.2")
+@@ -101,6 +102,7 @@ tasks.jar {
  }
  
  tasks.withType<Javadoc> {
 +    (options as StandardJavadocDocletOptions).addStringOption("-add-modules", "jdk.incubator.vector") // Purpur - our javadocs need this for pufferfish's SIMD patch
-     val options = options as StandardJavadocDocletOptions
-     options.overview = "src/main/javadoc/overview.html"
-     options.isDocFilesSubDirs = true
+     inputs.files(apiAndDocs)
+         .ignoreEmptyDirectories()
+         .withPropertyName(apiAndDocs.name + "-configuration")
 diff --git a/src/main/java/com/destroystokyo/paper/ClientOption.java b/src/main/java/com/destroystokyo/paper/ClientOption.java
 index cedb51f9f3a9150035c2b44970a096448c441dd9..130fab58e6d448ec08667e2a6c13fc78121f802b 100644
 --- a/src/main/java/com/destroystokyo/paper/ClientOption.java
@@ -143,12 +140,12 @@ index f2e3233a3d1744e32fb76d3731b9858ef0067e30..e66e8b28c673216dd1587582f44c26f6
      /**
       * Attack the specified entity using a ranged attack.
 diff --git a/src/main/java/com/destroystokyo/paper/entity/ai/VanillaGoal.java b/src/main/java/com/destroystokyo/paper/entity/ai/VanillaGoal.java
-index 8fd399f791b45eb7fc62693ca954eea0c68e2881..c18940f5c3b3436c19ca6ea466bc8a78579c795f 100644
+index 2405254739a83b2fb517da7fa4ea0721c68f9f6d..b3e4d10e54952be23ba3f4bcc374c24cff8b0ce2 100644
 --- a/src/main/java/com/destroystokyo/paper/entity/ai/VanillaGoal.java
 +++ b/src/main/java/com/destroystokyo/paper/entity/ai/VanillaGoal.java
-@@ -199,6 +199,18 @@ public interface VanillaGoal<T extends Mob> extends Goal<T> {
-     GoalKey<Mob> CLIMB_ON_TOP_OF_POWDER_SNOW = GoalKey.of(Mob.class, NamespacedKey.minecraft("climb_on_top_of_powder_snow"));
-     GoalKey<Wolf> WOLF_PANIC = GoalKey.of(Wolf.class, NamespacedKey.minecraft("wolf_panic"));
+@@ -197,6 +197,18 @@ public interface VanillaGoal<T extends Mob> extends Goal<T> {
+     GoalKey<Raider> RAIDER_MOVE_THROUGH_VILLAGE = GoalKey.of(Raider.class, NamespacedKey.minecraft("raider_move_through_village"));
+     GoalKey<Creature> PARROT_WANDER = GoalKey.of(Creature.class, NamespacedKey.minecraft("parrot_wander"));
  
 +    // Purpur start
 +    GoalKey<Mob> MOB_HAS_RIDER = GoalKey.of(Mob.class, NamespacedKey.minecraft("has_rider"));
@@ -621,7 +618,7 @@ index 944f9b87a11472ac6d7e328acc00bf09f899e648..dfdcbcd79e750fefa90b7a7ca58490a1
 +    // Purpur end
  }
 diff --git a/src/main/java/org/bukkit/ChatColor.java b/src/main/java/org/bukkit/ChatColor.java
-index 4594701d77c5d0f744bece871b98d9f6f73eb5a7..924af5982b1990492cafe6ef8d9f284f7933e7c4 100644
+index 4594701d77c5d0f744bece871b98d9f6f73eb5a7..a991bfe33f695a6166be6937039098ddea892f7b 100644
 --- a/src/main/java/org/bukkit/ChatColor.java
 +++ b/src/main/java/org/bukkit/ChatColor.java
 @@ -2,6 +2,7 @@ package org.bukkit;
@@ -678,7 +675,7 @@ index 4594701d77c5d0f744bece871b98d9f6f73eb5a7..924af5982b1990492cafe6ef8d9f284f
 +
 +    @NotNull
 +    public static net.kyori.adventure.text.Component parseMM(@NotNull String string, @Nullable Object... args) {
-+        return net.kyori.adventure.text.minimessage.MiniMessage.miniMessage().deserialize(String.format(string, args));
++        return net.kyori.adventure.text.minimessage.MiniMessage.get().parse(String.format(string, args));
 +    }
 +
 +    @Deprecated
@@ -725,13 +722,14 @@ index 525ede42137cc27cf20cf713478e85292455676e..a0279fcbfc76ad97a61fc191424e876d
  
      WATER,
 diff --git a/src/main/java/org/bukkit/Material.java b/src/main/java/org/bukkit/Material.java
-index ef7054fec75d91082be27fdd2a06469f37a6c174..d410cc574c941a348d7130bf1709859c2f1f4505 100644
+index 56e5ab93096801277ec5162981ddf5275d2c7669..bfcd5b17898ae97340d813bb46506234bc03e229 100644
 --- a/src/main/java/org/bukkit/Material.java
 +++ b/src/main/java/org/bukkit/Material.java
-@@ -9869,4 +9869,39 @@ public enum Material implements Keyed, net.kyori.adventure.translation.Translata
-         return Bukkit.getUnsafe().getCreativeCategory(this);
-     }
+@@ -9857,4 +9857,40 @@ public enum Material implements Keyed, net.kyori.adventure.translation.Translata
  
+         return Bukkit.getUnsafe().getDefaultAttributeModifiers(this, slot);
+     }
++
 +    // Purpur start
 +    public boolean isArmor() {
 +        switch (this) {
@@ -1044,10 +1042,10 @@ index cca362e54d6ff4a5a1e60f85a7eb1b3d222d3d48..97e26767b9143e290fb232013090a91b
 +    // Purpur end
  }
 diff --git a/src/main/java/org/bukkit/UnsafeValues.java b/src/main/java/org/bukkit/UnsafeValues.java
-index b39d1474210da1974d7e95f10daaf496a9330442..4d4c66d08d57d6a529a4589de00c7e2ac75725b5 100644
+index f59030893eba2bf653207b040a5f54fdf7b7b50f..430525a74bd727c6c831aaa86784430bf7b221a8 100644
 --- a/src/main/java/org/bukkit/UnsafeValues.java
 +++ b/src/main/java/org/bukkit/UnsafeValues.java
-@@ -97,6 +97,8 @@ public interface UnsafeValues {
+@@ -94,6 +94,8 @@ public interface UnsafeValues {
  
      /**
       * Called once by the version command on first use, then cached.
@@ -1056,7 +1054,7 @@ index b39d1474210da1974d7e95f10daaf496a9330442..4d4c66d08d57d6a529a4589de00c7e2a
       */
      default com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {
          return new com.destroystokyo.paper.util.VersionFetcher.DummyVersionFetcher();
-@@ -123,6 +125,8 @@ public interface UnsafeValues {
+@@ -120,6 +122,8 @@ public interface UnsafeValues {
      /**
       * Return the translation key for the Material, so the client can translate it into the active
       * locale when using a {@link net.kyori.adventure.text.TranslatableComponent}.
@@ -1065,7 +1063,7 @@ index b39d1474210da1974d7e95f10daaf496a9330442..4d4c66d08d57d6a529a4589de00c7e2a
       * @return the translation key
       */
      String getTranslationKey(Material mat);
-@@ -130,6 +134,8 @@ public interface UnsafeValues {
+@@ -127,6 +131,8 @@ public interface UnsafeValues {
      /**
       * Return the translation key for the Block, so the client can translate it into the active
       * locale when using a {@link net.kyori.adventure.text.TranslatableComponent}.
@@ -1074,7 +1072,7 @@ index b39d1474210da1974d7e95f10daaf496a9330442..4d4c66d08d57d6a529a4589de00c7e2a
       * @return the translation key
       */
      String getTranslationKey(org.bukkit.block.Block block);
-@@ -138,6 +144,8 @@ public interface UnsafeValues {
+@@ -135,6 +141,8 @@ public interface UnsafeValues {
       * Return the translation key for the EntityType, so the client can translate it into the active
       * locale when using a {@link net.kyori.adventure.text.TranslatableComponent}.<br>
       * This is <code>null</code>, when the EntityType isn't known to NMS (custom entities)
@@ -1083,7 +1081,7 @@ index b39d1474210da1974d7e95f10daaf496a9330442..4d4c66d08d57d6a529a4589de00c7e2a
       * @return the translation key
       */
      String getTranslationKey(org.bukkit.entity.EntityType type);
-@@ -153,6 +161,8 @@ public interface UnsafeValues {
+@@ -150,6 +158,8 @@ public interface UnsafeValues {
       * Creates and returns the next EntityId available.
       * <p>
       * Use this when sending custom packets, so that there are no collisions on the client or server.
