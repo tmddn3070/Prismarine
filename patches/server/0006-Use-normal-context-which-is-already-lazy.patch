@@ -3,24 +3,40 @@ From: Alpha <alphakr93@outlook.com>
 Date: Thu, 20 Jan 2022 10:03:50 +0900
 Subject: [PATCH] Use normal context, which is already lazy
 
+Original by Paul Sauve <paul@technove.co>
+
+Copyright (C) 2020 Technove LLC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/io/papermc/paper/util/CollisionUtil.java b/src/main/java/io/papermc/paper/util/CollisionUtil.java
-index 3ce132ea28ff9fc6f7afd68bcd0fc1ae843a3cd5..13992d1cbc141954150f8bfc21381a77955a31cc 100644
+index b25018ab6cff59e43652c953421f01b6d0bb0a85..cadc69669b790c95f8894a6afcd5e55948f4b3f0 100644
 --- a/src/main/java/io/papermc/paper/util/CollisionUtil.java
 +++ b/src/main/java/io/papermc/paper/util/CollisionUtil.java
-@@ -644,8 +644,12 @@ public final class CollisionUtil {
+@@ -619,7 +619,11 @@ public final class CollisionUtil {
                                  if ((edgeCount != 1 || blockData.shapeExceedsCube()) && (edgeCount != 2 || blockData.getBlock() == Blocks.MOVING_PISTON)) {
                                      mutablePos.set(blockX, blockY, blockZ);
                                      if (collisionShape == null) {
-+                                    if (net.prismarineteam.prismarine.PrismarineConfig.useNormalCollisionContext) {
-+                                        collisionShape = CollisionContext.of(entity);
-+                                    } else {
-                                         collisionShape = new LazyEntityCollisionContext(entity);
+-                                        collisionShape = new LazyEntityCollisionContext(entity);
++                                        if (net.prismarineteam.prismarine.PrismarineConfig.useNormalCollisionContext) {
++                                            collisionShape = CollisionContext.of(entity);
++                                        } else {
++                                            collisionShape = new LazyEntityCollisionContext(entity);
++                                        }
                                      }
-+                                    }
                                      VoxelShape voxelshape2 = blockData.getCollisionShape(getter, mutablePos, collisionShape);
                                      if (voxelshape2 != Shapes.empty()) {
-                                         VoxelShape voxelshape3 = voxelshape2.move((double)blockX, (double)blockY, (double)blockZ);
 diff --git a/src/main/java/net/prismarineteam/prismarine/PrismarineConfig.java b/src/main/java/net/prismarineteam/prismarine/PrismarineConfig.java
 index 29f18e26258c2d6b23bc8e601167da7dbe13f34b..4dad7fc69bd213fcd20c24b032e1fa70cc6d0366 100644
 --- a/src/main/java/net/prismarineteam/prismarine/PrismarineConfig.java
