@@ -28,7 +28,7 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index b48210b1075f45388b855f807db474037e88f8a8..efa88fe9d5e04ab41e64b7e9be5e45019bb8abc3 100644
+index 4eb23fd9ca0cec93c66bcee120cfbb3365513792..843cc1b8dbc92b86c5dc830f10ecd9469ccc236a 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
 @@ -190,6 +190,7 @@ public class ServerEntity {
@@ -63,12 +63,12 @@ index b48210b1075f45388b855f807db474037e88f8a8..efa88fe9d5e04ab41e64b7e9be5e4501
          this.entity.stopSeenByPlayer(player);
          player.connection.send(new ClientboundRemoveEntitiesPacket(new int[]{this.entity.getId()}));
 diff --git a/src/main/java/net/prismarineteam/prismarine/PrismarineConfig.java b/src/main/java/net/prismarineteam/prismarine/PrismarineConfig.java
-index 40e5718ed69146cbf1aef7819bda1b8822e2499d..29f18e26258c2d6b23bc8e601167da7dbe13f34b 100644
+index dfa4d00dabd928188c9dd405ec50d49564c88f17..e810a5e60584b7a3cb39bf7a814cc6f4c33b2363 100644
 --- a/src/main/java/net/prismarineteam/prismarine/PrismarineConfig.java
 +++ b/src/main/java/net/prismarineteam/prismarine/PrismarineConfig.java
-@@ -145,4 +145,9 @@ public class PrismarineConfig {
-         }
-         return builder.build();
+@@ -182,4 +182,9 @@ public class PrismarineConfig {
+         enableMaxVillagerTradeLimit = getBoolean("settings.max-villager-trade-limit.enabled", enableMaxVillagerTradeLimit);
+         maxVillagerTradeLimit = getInt("settings.max-villager-trade-limit.limit", maxVillagerTradeLimit);
      }
 +
 +    public static boolean doNotSendUselessEntityPackets = true;

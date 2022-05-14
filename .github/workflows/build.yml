@@ -3,6 +3,9 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+  
+env:
+  branch: ver/1.18.2
 
 jobs:
   release:
@@ -11,6 +14,7 @@ jobs:
         jdk: [17.0.2]
         java: ['temurin']
         os: [ubuntu-20.04]
+        master: ['ver/1.18.2']
 
     if: "!startsWith(github.event.commits[0].message, '[CI-Skip]')"
     runs-on: ${{ matrix.os }}
@@ -51,6 +55,7 @@ jobs:
           path: build/libs
 
       - name: Release Artifacts
+        if: github.ref_name == env.branch
         uses: marvinpinto/action-automatic-releases@latest
         with:
           title: "Release #${{ env.workflow }}"
@@ -60,6 +65,7 @@ jobs:
           prerelease: false
           
       - name: Release Artifacts (Latest)
+        if: github.ref_name == env.branch
         uses: marvinpinto/action-automatic-releases@latest
         with:
           title: "Release #${{ env.workflow }}"
