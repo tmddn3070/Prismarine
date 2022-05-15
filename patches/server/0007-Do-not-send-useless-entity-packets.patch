@@ -63,10 +63,10 @@ index 4eb23fd9ca0cec93c66bcee120cfbb3365513792..843cc1b8dbc92b86c5dc830f10ecd946
          this.entity.stopSeenByPlayer(player);
          player.connection.send(new ClientboundRemoveEntitiesPacket(new int[]{this.entity.getId()}));
 diff --git a/src/main/java/net/prismarineteam/prismarine/PrismarineConfig.java b/src/main/java/net/prismarineteam/prismarine/PrismarineConfig.java
-index 357a998cfe0917386ec9623e345bc7902c40a9c5..217fc6197a0ef95ac98e8f18edcf0776b9fcc1b9 100644
+index 8961be1c345f3b70e73f5fbaba3325cc6a293044..f9b7632dab395f036bad3838d371948757fe8402 100644
 --- a/src/main/java/net/prismarineteam/prismarine/PrismarineConfig.java
 +++ b/src/main/java/net/prismarineteam/prismarine/PrismarineConfig.java
-@@ -191,4 +191,9 @@ public class PrismarineConfig {
+@@ -196,4 +196,9 @@ public class PrismarineConfig {
          enableMaxVillagerTradeLimit = getBoolean("settings.max-villager-trade-limit.enabled", enableMaxVillagerTradeLimit);
          maxVillagerTradeLimit = getInt("settings.max-villager-trade-limit.limit", maxVillagerTradeLimit);
      }
